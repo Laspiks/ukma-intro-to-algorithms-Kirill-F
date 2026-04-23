@@ -1,0 +1,24 @@
+Practical Task 2, Task 1
+
+Library sizes:
+- libstatistical_measures_static.a: 8604 bytes
+- libstatistical_measures_dynamic.so: 19288 bytes
+
+Binary sizes:
+- main_static: 21952 bytes
+- main_dynamic: 18984 bytes
+
+Output comparison:
+- main_static:
+  Mean: 18.44
+  Standard Deviation: 5.08
+  95% Confidence Interval: [15.13, 21.76]
+- main_dynamic:
+  Mean: 18.44
+  Standard Deviation: 5.08
+  95% Confidence Interval: [15.13, 21.76]
+
+Conclusion:
+- Dynamic library is larger than static library.
+- Static executable is larger than dynamic executable.
+- Program output is identical for both binaries.
