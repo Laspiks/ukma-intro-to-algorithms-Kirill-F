@@ -1,0 +1,5 @@
+BasedOnStyle: LLVM  # You can change this to Google, WebKit, etc.
+IndentWidth: 4      # Set indentation to 4 spaces
+UseTab: Never       # Never use tabs, always use spaces
+BreakBeforeBraces: Attach  # Keeps braces on the same line as function headers
+ColumnLimit: 100    # Adjust line length as needed
