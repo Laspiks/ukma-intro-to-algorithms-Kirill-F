@@ -7,6 +7,7 @@
 #include <string.h>
 #include <math.h>
 
+
 void test_LLRBPut() {
     NodePtr head = NULL;
 
@@ -39,22 +40,22 @@ void test_LLRBPut() {
     assert(equal(head->left->left->left->left->key, "A"));
 
     // Check the color of connections
-    assert(!isRed(head));        // "M" is black
-    assert(!isRed(head->left));   // "J" is black
-    assert(!isRed(head->right)); // "R" is black
+    assert(!isRed(head));        // M is black
+    assert(!isRed(head->left));   // J is black
+    assert(!isRed(head->right)); // R is black
+    
+    assert(isRed(head->left->left)); // E is red
+    assert(!isRed(head->left->right)); // L is black
 
-    assert(isRed(head->left->left)); // "E" is red
-    assert(!isRed(head->left->right)); // "L" is black
+    assert(!isRed(head->right->left));   // P is black
+    assert(!isRed(head->right->right)); // X is black
 
-    assert(!isRed(head->right->left));   // "P" is black
-    assert(!isRed(head->right->right)); // "X" is black
+    assert(!isRed(head->left->left->left));   // C is black
+    assert(!isRed(head->left->left->right)); // H is black
 
-    assert(!isRed(head->left->left->left));   // "C" is black
-    assert(!isRed(head->left->left->right)); // "H" is black
+    assert(isRed(head->right->right->left)); // S is red
 
-    assert(isRed(head->right->right->left)); // "S" is red
-
-    assert(isRed(head->left->left->left->left)); // "A" is red
+    assert(isRed(head->left->left->left->left)); // A is red
 
     // Clean up
     BSTDestroy(head);

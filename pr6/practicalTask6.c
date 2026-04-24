@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,6 +8,7 @@ typedef struct {
 
 static Point p0;
 
+// Спочатку шукаємо найнижчу точку, а якщо y однаковий - лівішу.
 static int compare_by_y_then_x(const void *a, const void *b) {
     const Point *left = a;
     const Point *right = b;
@@ -26,21 +26,31 @@ static long long squared_distance(Point a, Point b) {
     return dx * dx + dy * dy;
 }
 
+// Знак векторного добутку показує, куди повертаємо:
+// > 0 - проти годинникової, < 0 - за годинниковою.
+static long long cross_product(Point a, Point b, Point c) {
+    long long abx = (long long)b.x - a.x;
+    long long aby = (long long)b.y - a.y;
+    long long acx = (long long)c.x - a.x;
+    long long acy = (long long)c.y - a.y;
+    return abx * acy - aby * acx;
+}
+
+// Сортуємо відносно p0 за полярним кутом.
+// Якщо точки лежать на одному промені, ближча має йти першою.
 static int compare_by_polar_angle(const void *a, const void *b) {
     const Point *left = a;
     const Point *right = b;
 
-    double angle_left = atan2((double)left->y - p0.y, (double)left->x - p0.x);
-    double angle_right = atan2((double)right->y - p0.y, (double)right->x - p0.x);
-
-    if (angle_left < angle_right) {
+    long long turn = cross_product(p0, *left, *right);
+    if (turn > 0) {
         return -1;
     }
-    if (angle_left > angle_right) {
+    if (turn < 0) {
         return 1;
     }
 
-    // if same angle keep closer point 1st
+    // Якщо кут однаковий, залишаємо ближчу точку раніше.
     long long dist_left = squared_distance(p0, *left);
     long long dist_right = squared_distance(p0, *right);
     return (dist_left > dist_right) - (dist_left < dist_right);
@@ -80,11 +90,11 @@ int main(void) {
         }
     }
 
-    // find the lowest point
+    // Ставимо p0 на початок масиву.
     qsort(points, (size_t)n, sizeof(Point), compare_by_y_then_x);
     p0 = points[0];
 
-    // sort others around p0
+    // Решту точок впорядковуємо навколо p0.
     if (n > 1) {
         qsort(points + 1, (size_t)(n - 1), sizeof(Point), compare_by_polar_angle);
     }
